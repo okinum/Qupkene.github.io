@@ -1,149 +1,28 @@
-        let officers = [
-            { id: "085", name: "Kalle Rebane - PATRULL", distance: "1.7 km", time: "2 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
-//kindral
-            { id: "002", name: "Liisa Tamm - korrakaitse politseikindral", distance: "3.2 km", time: "5 min", avatar: "https://i.ibb.co/Y0cygDW/png-transparent-police-officer-logo-of-police-officer-police-officer-hat-logo-removebg-preview-1.png" },
-//patrull
-            { id: "013", name: "Priit Saar - PATRULL", distance: "4.5 km", time: "7 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
-            { id: "044", name: "Eeva Leht - PATRULL", distance: "1.0 km", time: "1 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
-    { id: "051", name: "Pille Vits - PATRULL", distance: "5.0 km", time: "6 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
-    { id: "052", name: "Jenni Must - PATRULL", distance: "4.5 km", time: "5 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
-//kriminaalpolitsei
-    { id: "960", name: "Ursula Treen - KRIMINAALPOLITSEI", distance: "16.5 km", time: "15 min", avatar: "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png" },
-    { id: "961", name: "Reimo Rann - KRIMINAALPOLITSEI", distance: "2.5 km", time: "3 min", avatar: "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png" },
-//kiirreageerijad
-    { id: "570", name: "Toomas Perk - KIIRREAGEERIJA", distance: "19.5 km", time: "18 min", avatar: "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png" },
-    { id: "571", name: "Karel Tael - KIIRREAGEERIJA", distance: "3.5 km", time: "4 min", avatar: "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png" },
-          // lisa veel ohvitsere...
-        ];
-
-        let names = ["Kalle Rebane", "Heili Sillyke", "Liisa Tamm", "Priit Saar", "Eeva Leht", "Marko Mets", "Anabell Luu", "Meeli Jõesaar", "Robert Tamm", "Karolin Vahter", "Magnus Sarmet", "Rainer Einblau", "Tundmatu"];
-
-        let people = [
-            {
-                name: "Kalle Rebane",
-                age: 42,
-                job: "Politseinik",
-                location: "Tallinn",
-                previousCases: ["Kiiruse ületamine 11-24km/h", "Liiklusõnnetus"],
-                isWanted: false,
-                avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-            },
-            {
-                name: "Heili Sillyke",
-                age: 25,
-                job: "Sukelduja",
-                location: "Tallinn",
-                previousCases: ["Koduvägivald ohver", "Looma vargus"],
-                isWanted: false,
-                avatar: "https://i.ibb.co/10B8rzF/images-2-1.png"
-            },
-            {
-                name: "Liisa Tamm",
-                age: 35,
-                job: "Politseinik",
-                location: "Tartu",
-                previousCases: ["Koduvägivald", "Joobes juhtimine"],
-                isWanted: false,
-                avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-            },
-            {
-                name: "Priit Saar",
-                age: 29,
-                job: "Töötu",
-                location: "Narva",
-                previousCases: ["Pangarööv"],
-                isWanted: false,
-                avatar: "https://i.ibb.co/10B8rzF/images-2-1.png"
-            },
-
-    {
-        name: "Kalle Rebane - PATRULL", 
-        age: 42,
-        job: "Politseinik",
-        location: "Tallinn",
-        previousCases: ["Kiiruse ületamine 11-24km/h", "Liiklusõnnetus"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Liisa Tamm - korrakaitse politseikindral", 
-        age: 50,
-        job: "Politseikindral",
-        location: "Tartu",
-        previousCases: ["Joobes juhtimine", "Vägivallajuhtum politseinikuga"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Priit Saar - PATRULL", 
-        age: 36,
-        job: "Politseinik",
-        location: "Narva",
-        previousCases: ["Pangarööv", "Liiklusõnnetus"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Eeva Leht - PATRULL", 
-        age: 30,
-        job: "Politseinik",
-        location: "Tallinn",
-        previousCases: ["Koduvägivald", "Joobes juhtimine"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Pille Vits - PATRULL", 
-        age: 33,
-        job: "Politseinik",
-        location: "Pärnu",
-        previousCases: ["Salakaubavedu", "Korrarikkuja avalikus kohas"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Jenni Must - PATRULL", 
-        age: 28,
-        job: "Politseinik",
-        location: "Narva",
-        previousCases: ["Vargus", "Võltsitud dokument"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Ursula Treen - KRIMINAALPOLITSEI", 
-        age: 45,
-        job: "Kriminaalpolitseinik",
-        location: "Tallinn",
-        previousCases: ["Mõrvauurimine", "Narkokuritegu"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Reimo Rann - KRIMINAALPOLITSEI", 
-        age: 38,
-        job: "Kriminaalpolitseinik",
-        location: "Tartu",
-        previousCases: ["Pettus", "Rahapesu uurimine"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Toomas Perk - KIIRREAGEERIJA", 
-        age: 40,
-        job: "Kiirreageerija",
-        location: "Tallinn",
-        previousCases: ["Relvastatud rööv", "Terrorismikahtlus"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    },
-    {
-        name: "Karel Tael - KIIRREAGEERIJA", 
-        age: 35,
-        job: "Kiirreageerija",
-        location: "Tartu",
-        previousCases: ["Pantvangikriis", "Relvastatud rünnak"],
-        isWanted: false,
-        avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
-    }
-        ];
+{
+  "officers": [
+    { "id": "085", "name": "Kalle Rebane", "role": "PATRULL", "distance": "1.7 km", "time": "2 min", "avatar": "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
+    { "id": "002", "name": "Liisa Tamm", "role": "Politseikindral", "distance": "3.2 km", "time": "5 min", "avatar": "https://i.ibb.co/Y0cygDW/png-transparent-police-officer-logo-of-police-officer-police-officer-hat-logo-removebg-preview-1.png" },
+    { "id": "013", "name": "Priit Saar", "role": "PATRULL", "distance": "4.5 km", "time": "7 min", "avatar": "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
+    { "id": "044", "name": "Eeva Leht", "role": "PATRULL", "distance": "1.0 km", "time": "1 min", "avatar": "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
+    { "id": "051", "name": "Pille Vits", "role": "PATRULL", "distance": "5.0 km", "time": "6 min", "avatar": "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
+    { "id": "052", "name": "Jenni Must", "role": "PATRULL", "distance": "4.5 km", "time": "5 min", "avatar": "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp" },
+    { "id": "960", "name": "Ursula Treen", "role": "KRIMINAALPOLITSEI", "distance": "16.5 km", "time": "15 min", "avatar": "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png" },
+    { "id": "961", "name": "Reimo Rann", "role": "KRIMINAALPOLITSEI", "distance": "2.5 km", "time": "3 min", "avatar": "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png" },
+    { "id": "570", "name": "Toomas Perk", "role": "KIIRREAGEERIJA", "distance": "19.5 km", "time": "18 min", "avatar": "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png" },
+    { "id": "571", "name": "Karel Tael", "role": "KIIRREAGEERIJA", "distance": "3.5 km", "time": "4 min", "avatar": "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png" }
+  ],
+  
+  "people": [
+    { "name": "Kalle Rebane", "age": 42, "job": "Politseinik", "location": "Tallinn", "previousCases": ["Kiiruse ületamine 11-24km/h", "Liiklusõnnetus"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" },
+    { "name": "Heili Sillyke", "age": 25, "job": "Sukelduja", "location": "Tallinn", "previousCases": ["Koduvägivald ohver", "Looma vargus"], "isWanted": false, "avatar": "https://i.ibb.co/10B8rzF/images-2-1.png" },
+    { "name": "Liisa Tamm", "age": 35, "job": "Politseinik", "location": "Tartu", "previousCases": ["Koduvägivald", "Joobes juhtimine"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" },
+    { "name": "Priit Saar", "age": 29, "job": "Töötu", "location": "Narva", "previousCases": ["Pangarööv"], "isWanted": false, "avatar": "https://i.ibb.co/10B8rzF/images-2-1.png" },
+    { "name": "Eeva Leht", "age": 30, "job": "Politseinik", "location": "Tallinn", "previousCases": ["Koduvägivald", "Joobes juhtimine"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" },
+    { "name": "Pille Vits", "age": 33, "job": "Politseinik", "location": "Pärnu", "previousCases": ["Salakaubavedu", "Korrarikkuja avalikus kohas"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" },
+    { "name": "Jenni Must", "age": 28, "job": "Politseinik", "location": "Narva", "previousCases": ["Vargus", "Võltsitud dokument"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" },
+    { "name": "Ursula Treen", "age": 45, "job": "Kriminaalpolitseinik", "location": "Tallinn", "previousCases": ["Mõrvauurimine", "Narkokuritegu"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" },
+    { "name": "Reimo Rann", "age": 38, "job": "Kriminaalpolitseinik", "location": "Tartu", "previousCases": ["Pettus", "Rahapesu uurimine"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" },
+    { "name": "Toomas Perk", "age": 40, "job": "Kiirreageerija", "location": "Tallinn", "previousCases": ["Relvastatud rööv", "Terrorismikahtlus"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" },
+    { "name": "Karel Tael", "age": 35, "job": "Kiirreageerija", "location": "Tartu", "previousCases": ["Pantvangikriis", "Relvastatud rünnak"], "isWanted": false, "avatar": "https://i.ibb.co/DwF0TtD/images-1-1.png" }
+  ]
+}
