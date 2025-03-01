@@ -15,43 +15,30 @@
             }
         }
 		
-		// Laeb JSON-andmed serverist
 function loadData() {
     fetch("data.json")
-        .then(response => response.json())  // Teisendab vastuse JSON-iks
+        .then(response => response.json())
         .then(data => {
-            console.log("Laetud andmed:", data); // Näitab andmeid konsoolis
+            console.log("Laetud andmed:", data);
             processOfficers(data.officers);
-            processCalls(data.calls);
+            processPeople(data.people);
         })
         .catch(error => console.error("Andmete laadimine ebaõnnestus:", error));
 }
 
-// Funktsioon politseinike nimekirja kuvamiseks
 function processOfficers(officers) {
-    const officerList = document.getElementById("officerList");
-    officerList.innerHTML = ""; // Tühjendab nimekirja enne uuendamist
-
     officers.forEach(officer => {
-        const div = document.createElement("div");
-        div.innerHTML = `<strong>${officer.name}</strong> - ${officer.role} (${officer.distance}, ${officer.time})`;
-        officerList.appendChild(div);
+        console.log(`${officer.name} - ${officer.role}`);
     });
 }
 
-// Funktsioon kõnede kuvamiseks
-function processCalls(calls) {
-    const callList = document.getElementById("callList");
-    callList.innerHTML = "";
-
-    calls.forEach(call => {
-        const div = document.createElement("div");
-        div.innerHTML = `<strong>${call.title}</strong><br>${call.description}<br>Helistaja: ${call.caller}`;
-        callList.appendChild(div);
+function processPeople(people) {
+    people.forEach(person => {
+        console.log(`${person.name}, ${person.age} aastat vana - ${person.job}`);
     });
 }
 
-// Laeb andmed kohe, kui leht laetakse
+// Laadib andmed kohe
 loadData();
 
 
