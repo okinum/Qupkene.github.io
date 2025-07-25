@@ -657,6 +657,7 @@ function assignOfficerToCall(callItem) {
     const officerButtons = document.querySelectorAll('.send-officer');
 
     officerButtons.forEach(button => {
+        if (button.classList.contains("assigned-btn")) return;
         const newButton = button.cloneNode(true);
         button.parentNode.replaceChild(newButton, button);
 
