@@ -396,6 +396,8 @@ button.assigned-btn {
     <audio id="alertSound" src="https://audio.jukehost.co.uk/f69LT0iC444l0iUZKaZPBavMVkMt8VOY"></audio>
     <audio id="loginSound" src="https://audio.jukehost.co.uk/CvSShK3d2T8p0OGT4JYPHBV8YO1IBsuu"></audio>
 
+    <audio id="supportNeededSound" src="https://audio.jukehost.co.uk/RtY32GMSrhW0zflvregX7bfNd9VE9gBn"></audio>
+
     <script>
         var rating = 25;
 
@@ -830,7 +832,7 @@ function assignOfficerToCall(callItem) {
                 document.getElementById(`progress-${callItem.phone}`).remove(); // Reset progress for the assigned officer
                 document.getElementById(`endTime-${callItem.phone}`).remove(); // Eemalda endTime element
 
-                callItem.querySelector('.officer-info').innerHTML += `\n<span class="support-chance" id="support-chance-${callItem.phone}">Toetuse nõudmise võimalus: ${callItem.support_need_chance}%</span>`;
+                //callItem.querySelector('.officer-info').innerHTML += `\n<span class="support-chance" id="support-chance-${callItem.phone}">Toetuse nõudmise võimalus: ${callItem.support_need_chance}%</span>`;
 
                 var rng_chance =Math.floor( Math.random() * 100);
                 
@@ -879,7 +881,7 @@ function assignOfficerToCall(callItem) {
                 if (progress >= support_progress && support_progress !== -1 && callItem.isSupported === false && callItem.isSupportNeeded === false) {
                     callItem.isSupportNeeded = true; // Märgi, et toetust vajatakse
                     callItem.style.backgroundColor = '#fff3cd';
-                    document.getElementById(`support-chance-${callItem.phone}`).remove();
+                    //document.getElementById(`support-chance-${callItem.phone}`).remove();
                     callItem.querySelector('.officer-info').innerHTML += `<span class="support-needed" id="support-needed-${callItem.phone}">Toetust vajab</span>`;
 
                     //console.log(`Call #${callItem.querySelector('strong').innerText} callItem.isSupportNeeded: ${callItem.isSupportNeeded}, callItem.isSupported: ${callItem.isSupported}, support_progress: ${support_progress}`);
@@ -887,6 +889,8 @@ function assignOfficerToCall(callItem) {
                     callItem.innerHTML += `
                         <button onclick="supportCall(this, ${callCount})" class="accept-btn">Aktsepteeri</button>
                     `;
+
+                    document.getElementById("supportNeededSound").play();
 
                 }
 
