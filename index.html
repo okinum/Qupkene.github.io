@@ -637,7 +637,7 @@ button.assigned-btn {
     const newCall = generateRandomCall();
 
     callItem.support_need_chance = newCall.support_need_chance; // Store support need chance in callItem
-
+    callItem.phone = newCall.phone;
     let nearestOfficer = -1;
     let nearestDistance = -1;
 
@@ -679,12 +679,19 @@ button.assigned-btn {
     callItem.isRejected = false
     callItem.isFinished = false
 
+    callItem.useSupport = false
+    callItem.isSupportNeeded = false
+    callItem.isSupported = false
+
+    callItem.assignOfficersNum = 0; 
+    callItem.assignOfficersCompletedNum = 0;
+
     callList.insertBefore(callItem, callList.firstChild);
     document.getElementById("newCallSound").play();
 
     callItem.innerHTML += `
                 <div class="officer-info">
-                    <span>Lõppeb:</span>
+                    <span id="endTime-${newCall.phone}">Lõppeb:</span>
                 </div>
                 <progress value="0" max="100" id="progress-${newCall.phone}"></progress>
             `;
@@ -695,7 +702,7 @@ button.assigned-btn {
 
         
         
-        console.log(`Progress for call #${newCall.phone}: ${progress}%`);
+        //console.log(`Progress for call #${newCall.phone}: ${progress}%`);
 
         if (callItem.isAccepted === false && callItem.isAssigned === false && callItem.isRejected === false) {
            // callItem.style.backgroundColor = '#d1ecf1'; // Blue background for new call
@@ -772,6 +779,16 @@ function acceptCall(button) {
     assignOfficerToCall(callItem); // Proceed to assign officer manually
 }
 
+function supportCall(button) {
+    var callItem = button.parentElement;
+
+  //  callItem.isAccepted = true;
+    
+    button.remove(); // Remove Accept button
+
+    assignOfficerToCall(callItem); // Proceed to assign officer manually
+}
+
 function assignOfficerToCall(callItem) {
     const officerButtons = document.querySelectorAll('.send-officer');
 
@@ -794,6 +811,8 @@ function assignOfficerToCall(callItem) {
                 return; // Vältime topeltmääramist
             }
 
+            callItem.assignOfficersNum += 1; // Suurendame määratud officerite arvu
+
             const travelTimeInMinutes = parseInt(assignedOfficer.time.split(' ')[0]);
 
             // Lisa officer info callile
@@ -805,6 +824,35 @@ function assignOfficerToCall(callItem) {
                 <progress value="0" max="100" id="progress-${assignedOfficer.id}"></progress>
             `;
 
+            var support_progress = -1;
+
+            if (callItem.isAssigned === false) {
+                document.getElementById(`progress-${callItem.phone}`).remove(); // Reset progress for the assigned officer
+                document.getElementById(`endTime-${callItem.phone}`).remove(); // Eemalda endTime element
+
+                callItem.querySelector('.officer-info').innerHTML += `\n<span class="support-chance" id="support-chance-${callItem.phone}">Toetuse nõudmise võimalus: ${callItem.support_need_chance}%</span>`;
+
+                var rng_chance =Math.floor( Math.random() * 100);
+                
+
+                if (rng_chance <= callItem.support_need_chance) {
+                    callItem.useSupport = true; // Märgi, et kasutaja vajab toetust
+                    support_progress = 25 + Math.floor(Math.random() * 55);
+
+                    console.log(`Random chance for support: ${support_progress}`);
+                }
+            }
+
+            if (callItem.isAssigned === true && callItem.isSupportNeeded === true && callItem.isSupported === false) {
+                callItem.isSupported = true; // Märgi, et toetust on antud
+
+                callItem.style.backgroundColor = '#d4edda'; // Roheline taust toetuse andmise korral
+                callItem.querySelector('.officer-info').innerHTML += `<span class="support-given" id="support-given-${callItem.phone}">Toetus antud</span>`;
+
+                document.getElementById(`support-needed-${callItem.phone}`).remove(); // Eemalda toetuse nõudmise tekst
+
+            }
+
             callItem.isAssigned = true;
 
 
@@ -815,49 +863,95 @@ function assignOfficerToCall(callItem) {
             
             var speedbydistance = getDistanceByStreet(callItem.streetData.name, assignedOfficer.current_street);
             speedbydistance = parseInt(speedbydistance.split(' ')[0]);
-            if (speedbydistance === 0) {
-                speedbydistance = 1; // Vältida jagamist nulliga
+            if (speedbydistance === 0 || speedbydistance === 1) {
+                speedbydistance = 2; // Vältida jagamist nulliga
             }
-            console.log(`callItem.streetData.name ${callItem.streetData.name} current street: ${assignedOfficer.current_street}`);
-            console.log(`Assigned officer ${assignedOfficer.name} to call #${callItem.querySelector('strong').innerText}. Speed by distance: ${speedbydistance}`);
+            //console.log(`callItem.streetData.name ${callItem.streetData.name} current street: ${assignedOfficer.current_street}`);
+           // console.log(`Assigned officer ${assignedOfficer.name} to call #${callItem.querySelector('strong').innerText}. Speed by distance: ${speedbydistance}`);
 
             assignedOfficer.current_street = callItem.streetData.name;
 
-            var support_progress = -1;
-
-            if (Math.random() * 100 >= callItem.support_need_chance) {
-                support_progress = 25 + Math.floor(Math.random() * 55);
-            }
-            
-            var support_chance = callItem.support_need_chance;
-
             let progress = 0;
+            let completed = false;
             const interval = setInterval(() => {
-                progress += 100 / (speedbydistance * 1); // Call lahendamiseks lisatakse travelTime x2
-                document.getElementById(`progress-${assignedOfficer.id}`).value = progress;
+
+
+                if (progress >= support_progress && support_progress !== -1 && callItem.isSupported === false && callItem.isSupportNeeded === false) {
+                    callItem.isSupportNeeded = true; // Märgi, et toetust vajatakse
+                    callItem.style.backgroundColor = '#fff3cd';
+                    document.getElementById(`support-chance-${callItem.phone}`).remove();
+                    callItem.querySelector('.officer-info').innerHTML += `<span class="support-needed" id="support-needed-${callItem.phone}">Toetust vajab</span>`;
+
+                    //console.log(`Call #${callItem.querySelector('strong').innerText} callItem.isSupportNeeded: ${callItem.isSupportNeeded}, callItem.isSupported: ${callItem.isSupported}, support_progress: ${support_progress}`);
+
+                    callItem.innerHTML += `
+                        <button onclick="supportCall(this, ${callCount})" class="accept-btn">Aktsepteeri</button>
+                    `;
+
+                }
+
+
+                if (callItem.useSupport === true) {
+                    if (callItem.isSupportNeeded === true && callItem.isSupported === false) {
+                        console.log(`Call #${callItem.querySelector('strong').innerText} callItem.isSupportNeeded: ${callItem.isSupportNeeded}, callItem.isSupported: ${callItem.isSupported}, support_progress: ${support_progress}`);
+                        progress += 0; // Call lahendamiseks lisatakse travelTime x2
+                    }
+                    else if (callItem.isSupportNeeded === true && callItem.isSupported === true) {
+                        progress += 100 / (speedbydistance * 2);
+                    }
+                     else if (callItem.isSupportNeeded === false && callItem.isSupported === false) {
+                        progress += 100 / (speedbydistance * 2);
+                    }
+
+                    if (progress !== document.getElementById(`progress-${assignedOfficer.id}`).value) {
+                        document.getElementById(`progress-${assignedOfficer.id}`).value = progress;
+                    }
+                }
+                else if (callItem.useSupport === false) {
+                    progress += 100 / (speedbydistance * 2); // Call lahendamiseks lisatakse travelTime x2
+                    document.getElementById(`progress-${assignedOfficer.id}`).value = progress;
+                }
+
+            
 
                 if (progress >= 100) {
-                    clearInterval(interval);
-                    callItem.style.backgroundColor = '#d4edda'; // Lahendatud
-                    callItem.innerHTML += '<span class="status-icon">✅</span>';
-                    assignedOfficer.isAssigned = false; // Vabasta officer
-                     // Märgi call lõpetatuks
-
-                    // Muuda nupp tagasi "Send" olekusse ja algse värviga
-                    newButton.classList.remove("assigned-btn");
-                    newButton.classList.add("send-btn");
-                    newButton.innerHTML = "Send";
-                    newButton.disabled = false; // Aktiveeri nupp uuesti
-
-                   if (callItem.isFinished === false) {
-                        var rating = Math.floor( 100 / callItem.progress);
-                        if (rating > 4) {
-                            rating = 4; 
-                        }
-                        updateRating(rating);
+                    if (completed === false) {
+                        completed = true;
+                        callItem.assignOfficersCompletedNum += 1;
                     }
-                    callItem.isFinished = true;
+                    if (callItem.assignOfficersCompletedNum == callItem.assignOfficersNum) {
+                        clearInterval(interval);
+                        callItem.style.backgroundColor = '#d4edda'; // Lahendatud
+                        callItem.innerHTML += '<span class="status-icon">✅</span>';
+                        assignedOfficer.isAssigned = false; // Vabasta officer
+                        // Märgi call lõpetatuks
+
+                        // Muuda nupp tagasi "Send" olekusse ja algse värviga
+                        newButton.classList.remove("assigned-btn");
+                        newButton.classList.add("send-btn");
+                        newButton.innerHTML = "Send";
+                        newButton.disabled = false; // Aktiveeri nupp uuesti
+
+                        if (callItem.isFinished === false) {
+                                var rating = Math.floor( 100 / callItem.progress);
+                                if (rating > 4) {
+                                    rating = 4; 
+                                }
+                                if (rating <= 2) {
+                                    rating = 2; 
+                                }
+
+                                if (callItem.useSupport === true) {
+                                    rating = Math.floor(rating * 1.5)
+                                }
+                                updateRating(rating);
+                        }
+                        callItem.isFinished = true;
+                    }
+                    
                 }
+
+
             }, 1000); // Update progress iga sekund
 
 setTimeout(() => {
@@ -1048,7 +1142,7 @@ function assignOfficers(callItem, availableOfficers) {
     addCall();
     
     // Määra randomiseeritud intervall (nt vahemikus 5 kuni 15 sekundit)
-    let randomInterval = Math.floor(Math.random() * (5000)) + 4000;
+    let randomInterval = Math.floor(Math.random() * (15000)) + 15000;
 
     // Rekursiivselt kutsu sama funktsioon random intervalliga
     setTimeout(addRandomCall, randomInterval);
