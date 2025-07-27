@@ -887,7 +887,7 @@ function assignOfficerToCall(callItem) {
                     //console.log(`Call #${callItem.querySelector('strong').innerText} callItem.isSupportNeeded: ${callItem.isSupportNeeded}, callItem.isSupported: ${callItem.isSupported}, support_progress: ${support_progress}`);
 
                     callItem.innerHTML += `
-                        <button onclick="supportCall(this, ${callCount})" class="accept-btn">Aktsepteeri</button>
+                        <button onclick="supportCall(this, ${callCount})" class="accept-btn">Saada abi!</button>
                     `;
 
                     document.getElementById("supportNeededSound").play();
