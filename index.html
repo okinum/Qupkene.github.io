@@ -858,7 +858,7 @@ function assignOfficerToCall(callItem) {
                 callItem.isSupported = true; // Märgi, et toetust on antud
 
                 callItem.style.backgroundColor = '#d4edda'; // Roheline taust toetuse andmise korral
-                callItem.querySelector('.officer-info').innerHTML += `<span class="support-given" id="support-given-${callItem.phone}">Toetus antud</span>`;
+                callItem.querySelector('.officer-info').innerHTML += `<span class="support-given" id="support-given-${callItem.phone}">Abi saadetud</span>`;
 
                 document.getElementById(`support-needed-${callItem.phone}`).remove(); // Eemalda toetuse nõudmise tekst
 
