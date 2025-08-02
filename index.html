@@ -574,14 +574,6 @@ button.assigned-btn {
         avatar: "https://i.ibb.co/DwF0TtD/images-1-1.png"
     }
         ];
-        let crimes = [
-            { type: "Kiiruse ületamine", count: 120 },
-            { type: "Vargus", count: 80 },
-            { type: "Koduvägivald", count: 60 },
-            { type: "Mõrv", count: 30 },
-            { type: "Narkokuritegevus", count: 50 },
-            { type: "Relvastatud rööv", count: 20 }
-        ];
         function getDistanceByStreet(street, otherstreet) {
             // Simuleeri kauguse saamist tänava järgi
             let streetData = streets.find(s => s.name === street);
@@ -1159,8 +1151,60 @@ function assignOfficers(callItem, availableOfficers) {
     { title: "Kohalikud narkodiilerid", description: "Kohalikud elanikud kahtlustavad, et naabruses tegutseb narkodiilerite võrgustik.", support_need_chance: 18  },
     { title: "Häiriv hääl naaberkorterist", description: "Naaberkorterist kostub terve päev valju metalli kriginat, mis häirib kogu korrust.", support_need_chance: 24  },
     { title: "Surnud isik hotellitoas", description: "Hotelli koristaja leidis toast isiku, kes ei hinga ja on nähtavasti surnud.", support_need_chance: 0  },
-    { title: "Kahtlustatav kodust väljumata", description: "Politseil on põhjus arvata, et otsitav isik peidab end oma korteris ega lahku sealt kunagi.", support_need_chance: 85  }
-    ];
+    { title: "Kahtlustatav kodust väljumata", description: "Politseil on põhjus arvata, et otsitav isik peidab end oma korteris ega lahku sealt kunagi.", support_need_chance: 85  },
+    { title: "Tulistamine koolis", description: "Kohalikus keskkoolis on tulistamine. Mitmed inimesed on vigastatud. Tulistaja võib veel hoones viibida.", support_need_chance: 100 },
+    { title: "Perevägivald lõppes surmaga", description: "Naaber kutsus politsei, kuuldes karjeid. Korterist leiti naine, kellel oli mitu noahaava. Mees on sündmuskohalt põgenenud.", support_need_chance: 88 },
+    { title: "Politseinik tapeti kontrolli käigus", description: "Liikluspeatus eskaleerus tulevahetuseks. Üks politseinik langes teenistuses, kahtlusalune on relvastatud ja põgenemas.", support_need_chance: 100 },
+    { title: "Vangide põgenemine konvoist", description: "Kaks vanglatranspordis olnud isikut ründasid saatjat ja põgenesid metsapiirkonda. Mõlemad on ohtlikud ja relvastatud.", support_need_chance: 91 },
+    { title: "Relvastatud rööv lõppes pantvangikriisiga", description: "Panga röövimise käigus haarasid kurjategijad mitu pantvangi. Kriis kestab, läbirääkimised käivad.", support_need_chance: 100 },
+    { title: "Elumajast leiti kolm surnukeha", description: "Naaber märkas, et peret pole päevi näha olnud. Politsei leidis kohapeal kolme pereliikme surnukehad. Tapmises kahtlustatakse peretuttavat.", support_need_chance: 76 },
+    { title: "Kahtlane isik avas tule kaubanduskeskuses", description: "Relvastatud mees avas tule rahvarohkes keskuses. On vigastatuid ja paanika.", support_need_chance: 100 },
+    { title: "Pommikahtlus rongijaamas", description: "Rongijaamas on leitud mahajäetud kott, mille läheduses märgati isikut, kes lahkus kiiresti. Kott võib sisaldada lõhkeainet.", support_need_chance: 93 },
+    { title: "Võimalik inimkaubandus kortermajas", description: "Mitmed inimesed kuulsid appikarjeid. Korterist leiti mitu isikut, keda hoiti vastu nende tahtmist. Kahtlusalune arvatakse olevat organiseeritud grupist.", support_need_chance: 60 },
+    { title: "Meeleavaldus läks üle vägivallaks", description: "Alguses rahumeelne protest muutus vägivaldseks. Politseinikke rünnati, on mitu vigastatut.", support_need_chance: 77 },
+    {title:"Relvastatud mees katusekorrusel",description:"Majanaabrid kutsusid politsei, kui nägid relvastatud meest kortermaja katusel sihtimas möödujaid.",support_need_chance:94},
+    {title:"Kooli pommiähvardus",description:"Anonüümne kõne teatas, et kooli on paigaldatud lõhkekeha. Kool evakueeriti, olukord on kriitiline.",support_need_chance:88},
+    {title:"Massitulistamine bussijaamas",description:"Tulistaja avas tule ootepaviljonis. On mitu hukkunut, ründaja liikus sündmuskohalt minema.",support_need_chance:100},
+    {title:"Lapse röövimine mänguväljakult",description:"Pealtnägijad nägid meest viimas last jõuga autosse ja lahkumas suurel kiirusel.",support_need_chance:91},
+    {title:"Võõras relvaga kooli territooriumil",description:"Õpilased märkasid tundmatut isikut relvaga koolihoovis liikumas.",support_need_chance:86},
+    {title:"Tapmine motellis",description:"Motellitoast leiti verine stseen ja elutu keha, kahtlustatakse narkotehingu ebaõnnestumist.",support_need_chance:55},
+    {title:"Tänavakaklus muutus tulevahetuseks",description:"Kaklus kahe jõugu vahel eskaleerus relvakonfliktiks keset linna. On vigastatuid.",support_need_chance:76},
+    {title:"Politseinik pussitati joobes isiku kinnipidamisel",description:"Rahunemiskutse käigus sai üks ohvitser noahaava. Kahtlusalune põgenes parki.",support_need_chance:68},
+    {title:"Raskelt vigastatud laps kodus",description:"Kiirabi kutsus politsei, kuna väike laps oli saanud seletamatuid vigastusi. Kahtlustatakse perevägivalda.",support_need_chance:41},
+    {title:"Lõhkematerjal korteris",description:"Politsei leidis läbiotsimisel eluruumidest suures koguses plahvatusohtlikke aineid.",support_need_chance:87},
+    {title:"Suitsiidikatse kõrghoones",description:"Isik istub kõrghoone äärel ja keeldub alla tulemast. Läbirääkijad teel.",support_need_chance:52},
+    {title:"Kahtlased kaevamised öösiti",description:"Naabrid märkasid, et öösiti kaevatakse metsas kraave ja kantakse kotte. Kahtlustatakse varjatud tegevust.",support_need_chance:21},
+    {title:"Rünnak meditsiinitöötaja vastu",description:"Kiirabitöötajat rünnati kodukülastuse käigus. Isik on tugevas afektiseisundis ja agressiivne.",support_need_chance:64},
+    {title:"Tapmine otseülekandes",description:"Sotsiaalmeediasse postitati video, kus noormees laseb kellegi maha ja põgeneb. Video asukoht on tuvastamisel.",support_need_chance:95},
+    {title:"Sõidukis avastati inimjäänused",description:"Võsast leitud hüljatud autost avastati tugeva lagunemisastmega surnukeha.",support_need_chance:60},
+    {title:"Laskmine mänguväljakul",description:"Kaks meest vahetasid tuld laste mänguväljaku läheduses. On vigastatuid, sealhulgas lapsi.",support_need_chance:92},
+    {title:"Kahtlane tegevus mahajäetud tehases",description:"Inimesed käivad öösiti maha jäetud tehases, kostub masinate müra. Kahtlustatakse ebaseaduslikku relvatöökoda.",support_need_chance:49},
+    {title:"Noorte kättemaksurünnak",description:"Grupp noorukeid ründas teist kampa pesapallikurkide ja noaga. On mitu vigastatut.",support_need_chance:57},
+    {title:"Vägivaldne röövimine tanklas",description:"Maskides mehed peksid töötaja läbi ja varastasid kassa. Juhtum salvestati turvakaamerasse.",support_need_chance:63},
+    {title:"Relvade smugeldamine sadamas",description:"Tolli teatel on info, et lähiajal saabub relvadega konteiner. Vajatakse relvastatud tuge.",support_need_chance:84},
+    {title:"Kahtlane parkiv sõiduk",description:"Kortermaja ees seisab mitu päeva tundmatu sõiduk. Elanikud kahtlustavad, et keegi jälgib neid.",support_need_chance:12},
+    {title:"Võltsitud rahatähed poes",description:"Poemüüja avastas sularahas makstud võltsitud kupüüri, mis võib viidata laiemale skeemile.",support_need_chance:7},
+    {title:"Kodutu tungis trepikotta",description:"Elanikud teatasid, et kodutu mees magab öösiti trepikojas ja keeldub lahkumast.",support_need_chance:3},
+    {title:"Müra garaažist hilistel tundidel",description:"Naabrid kuulevad öösiti mehaanilisi helisid garaažist. Kahtlustatakse illegaalseid töötlusi.",support_need_chance:15},
+    {title:"Teismelised ronivad kraanadele",description:"Ehitustandril ronivad noored kraanade ja tellingute otsas, oht vigastusteks.",support_need_chance:5},
+    {title:"Tundmatu isik pildistab maju",description:"Elanik nägi isikut, kes käis tänaval ja pildistas hooneid ning aknaid pikalt.",support_need_chance:6},
+    {title:"Lastekarjeid mänguväljakult",description:"Mänguväljakul kuuldakse tugevaid karjeid. Võib olla vigastus või kiusamine.",support_need_chance:4},
+    {title:"Kohviku omanik keeldub maksma töötajale",description:"Töötaja väidab, et tööandja ei maksnud palka ja ähvardas teda, kui ta raha küsis.",support_need_chance:9},
+    {title:"Naaber loopis prügi rõdult",description:"Ülemise korruse elanik viskas oma prügi alla tänavale ja keeldus vastutamast.",support_need_chance:2},
+    {title:"Valgustamata jalgrattur öösel",description:"Mitmed autojuhid teatasid ratturist, kes sõidab pimedas ilma tuledeta ja ohtlikult.",support_need_chance:1},
+    {title:"Kahtlane uksealt müük",description:"Tundmatu isik käib korterist korterisse ja üritab müüa elektroonikat ilma dokumentideta.",support_need_chance:10},
+    {title:"Mürarikas sünnipäev",description:"Kohalikus majas peetakse sünnipäevapidu, mille muusika ja karjumine häirib naabreid.",support_need_chance:3},
+    {title:"Ratas lukust lahti lõigatud",description:"Jalgrattaomanik leidis oma lukustatud ratta kadununa, lõikejäljed alles.",support_need_chance:8},
+    {title:"Koer ründas teist koera",description:"Jalutajate vahel tekkis konflikt, kuna üks koer hammustas teist. Loom on kontrollimata.",support_need_chance:5},
+    {title:"Koolilapse kadumine hommikul",description:"Laps ei ilmunud kooli ja vanemad ei saa temaga ühendust. Viimati nähti teda bussipeatuses.",support_need_chance:35},
+    {title:"Parkimisvaidlus eskaleerus sõimamiseks",description:"Kahe autojuhi vaidlus parkimiskoha üle muutus valjuks ja ähvardavaks.",support_need_chance:2},
+    {title:"Kahtlane lõhn trepikojas",description:"Kortermajas levib tugev keemiline või mädanenud lõhn. Elanikud on mures.",support_need_chance:6},
+    {title:"Taksosõitja keeldus maksmast",description:"Taksosõitja jõudis sihtkohta ja keeldus arvet tasumast, ähvardades juhti.",support_need_chance:4},
+    {title:"Järelvalveta laps mängib rõdul",description:"Väike laps on üksinda kortermaja rõdul ega reageeri koputustele. Vanemaid ei ole näha.",support_need_chance:13},
+    {title:"Ilutulestik öisel ajal",description:"Linna äärealal lasti öösel ilutulestikku, mis häiris elanikke ja äratas lapsed.",support_need_chance:3}
+
+
+     ];
 
     
     var randomPair = callPairs[Math.floor(Math.random() * callPairs.length)];
