@@ -403,19 +403,19 @@ button.assigned-btn {
 
         let officers = [
             //patrull
-            { id: "085", name: "Kalle Rebane - PATRULL", distance: "1.7 km", time: "2 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Pärnu mnt", type:"PATRULL"},    
-            { id: "013", name: "Priit Saar - PATRULL", distance: "4.5 km", time: "7 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Pärnu mnt", type:"PATRULL"},
-            { id: "044", name: "Eeva Leht - PATRULL", distance: "1.0 km", time: "1 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Pärnu mnt", type:"PATRULL"},
-            { id: "051", name: "Pille Vits - PATRULL", distance: "5.0 km", time: "6 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Pärnu mnt", type:"PATRULL"},
-            { id: "052", name: "Jenni Must - PATRULL", distance: "4.5 km", time: "5 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Pärnu mnt", type:"PATRULL"},
+            { id: "085", name: "Kalle Rebane - PATRULL", distance: "1.7 km", time: "2 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Tartu mnt", type:"PATRULL"},    
+            { id: "013", name: "Priit Saar - PATRULL", distance: "4.5 km", time: "7 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Tallinna mnt", type:"PATRULL"},
+            { id: "044", name: "Eeva Leht - PATRULL", distance: "1.0 km", time: "1 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Gonsiori tn", type:"PATRULL"},
+            { id: "051", name: "Pille Vits - PATRULL", distance: "5.0 km", time: "6 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Õismäe tee", type:"PATRULL"},
+            { id: "052", name: "Jenni Must - PATRULL", distance: "4.5 km", time: "5 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Vana-Lõuna tn", type:"PATRULL"},
             //kindral
             { id: "002", name: "Liisa Tamm - korrakaitse politseikindral", distance: "3.2 km", time: "5 min", avatar: "https://i.ibb.co/Y0cygDW/png-transparent-police-officer-logo-of-police-officer-police-officer-hat-logo-removebg-preview-1.png", current_street: "Pärnu mnt", type:"KORRAKAITSE"},
             //kriminaalpolitsei
-            { id: "960", name: "Ursula Treen - KRIMINAALPOLITSEI", distance: "16.5 km", time: "15 min", avatar: "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png", current_street: "Pärnu mnt", type:"KRIMINAALPOLITSEI"},
-            { id: "961", name: "Reimo Rann - KRIMINAALPOLITSEI", distance: "2.5 km", time: "3 min", avatar: "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png", current_street: "Pärnu mnt", type:"KRIMINAALPOLITSEI"},
+            { id: "960", name: "Ursula Treen - KRIMINAALPOLITSEI", distance: "16.5 km", time: "15 min", avatar: "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png", current_street: "Vabaduse pst", type:"KRIMINAALPOLITSEI"},
+            { id: "961", name: "Reimo Rann - KRIMINAALPOLITSEI", distance: "2.5 km", time: "3 min", avatar: "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png", current_street: "Liivalaia tn", type:"KRIMINAALPOLITSEI"},
             //kiirreageerijad
-            { id: "570", name: "Toomas Perk - KIIRREAGEERIJA", distance: "19.5 km", time: "18 min", avatar: "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png", current_street: "Pärnu mnt", type:"KIIRREAGEERIJA"},
-            { id: "571", name: "Karel Tael - KIIRREAGEERIJA", distance: "3.5 km", time: "4 min", avatar: "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png", current_street: "Pärnu mnt", type:"KIIRREAGEERIJA"},
+            { id: "570", name: "Toomas Perk - KIIRREAGEERIJA", distance: "19.5 km", time: "18 min", avatar: "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png", current_street: "Sõpruse pst", type:"KIIRREAGEERIJA"},
+            { id: "571", name: "Karel Tael - KIIRREAGEERIJA", distance: "3.5 km", time: "4 min", avatar: "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png", current_street: "Kreutzwaldi tn", type:"KIIRREAGEERIJA"},
 
         ];
         
@@ -606,6 +606,15 @@ button.assigned-btn {
         function updateRating(amount) {
             rating += amount;
             document.getElementById("rating").innerText = rating;
+
+            localStorage.Rating = Number(rating);
+        }
+
+        function setRating(amount) {
+            rating = amount;
+            document.getElementById("rating").innerText = rating;
+
+            localStorage.Rating = Number(rating);
         }
 
         function openTab(evt, tabName) {
@@ -661,7 +670,7 @@ button.assigned-btn {
     callItem.innerHTML = `
         <strong>#${callCount} ${newCall.title}</strong><br>
         <span>Tänav: ${streetData ? streetData.name : "Tundmatu"}</span><br>
-        <span>Lähim Ohvitser: ${nearestOfficer.name} (${nearestOfficer.id}) ${nearestDistance} km</span><br>
+        <span>Lähim Ohvitser: ${nearestOfficer.name} (${nearestOfficer.id}) ${nearestDistance} </span><br>
         <span>Kontakt: ${newCall.name}, Tel: ${newCall.phone}</span><br>
         <div class="hidden-description">${newCall.fullDescription}</div>
         <button onclick="toggleDescription(this)" class="show-more">Näita rohkem</button><br>
@@ -1314,6 +1323,19 @@ addRandomCall();
         setInterval(() => {
             // Tegevused nagu andmete uuendamine
         }, 5000);
+
+        if (localStorage.Rating === undefined) {
+            localStorage.Rating = 25;
+        }
+        if (localStorage.Rating === null) {
+            localStorage.Rating = 25;
+        }
+        if (localStorage.Rating === '') {
+            localStorage.Rating = 25;
+        }
+
+        setRating(Number(localStorage.Rating));
+
     </script>
 </body>
 </html>
