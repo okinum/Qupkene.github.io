@@ -310,6 +310,11 @@ button.assigned-btn {
             width: 48%;
         }
 
+        .small_header {
+            margin: 0;
+            font-size: 1.0em;
+        }
+
     </style>
 </head>
 <body>
@@ -325,7 +330,9 @@ button.assigned-btn {
     <div id="mainContent" style="display:none;">
         <div class="header">
             <h1>Politsei Andmebaas</h1>
-            <p>Staatus: <span id="rating">25</span></p>
+            <p class="small_header">Staatus: <span id="rating">25</span></p>
+            <p class="small_header">Raha: <span id="money">10000</span></p>
+            <p class="small_header">Päev: <span id="day">1</span></p>
         </div>
 
         <div class="container">
@@ -356,9 +363,18 @@ button.assigned-btn {
                     <div class="flex2 fit">
                         <!-- Officer List (Left Side) -->
                         <div class="officer-list" id="officerList">
+                            <h3>Politsei Ohvitserid</h3>
                             
                             <div id="officerMenu"></div>
+
+
+
+                            <!-- Officer Hire List -->
+                            <h3>Palka Ohvitserid</h3>
+                            <div id="officerHireList"></div>
                         </div>
+
+                        
                     </div>
                 </div>
 
@@ -400,20 +416,25 @@ button.assigned-btn {
 
     <script>
         var rating = 25;
+        var ratingDelta = 0;
+        var money = 10000;
+
+        var acceptedCall = null;
+        var canAcceptCall = true; // Flag to control call acceptance
 
         let officers = [
-            //patrull
+            //patrull PATRULL KORRAKAITSE KRIMINAALPOLITSEI KIIRREAGEERIJA
             { id: "085", name: "Kalle Rebane - PATRULL", distance: "1.7 km", time: "2 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Tartu mnt", type:"PATRULL"},    
             { id: "013", name: "Priit Saar - PATRULL", distance: "4.5 km", time: "7 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Tallinna mnt", type:"PATRULL"},
             { id: "044", name: "Eeva Leht - PATRULL", distance: "1.0 km", time: "1 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Gonsiori tn", type:"PATRULL"},
             { id: "051", name: "Pille Vits - PATRULL", distance: "5.0 km", time: "6 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Õismäe tee", type:"PATRULL"},
             { id: "052", name: "Jenni Must - PATRULL", distance: "4.5 km", time: "5 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Vana-Lõuna tn", type:"PATRULL"},
-            //kindral
+            //kindral KORRAKAITSE
             { id: "002", name: "Liisa Tamm - korrakaitse politseikindral", distance: "3.2 km", time: "5 min", avatar: "https://i.ibb.co/Y0cygDW/png-transparent-police-officer-logo-of-police-officer-police-officer-hat-logo-removebg-preview-1.png", current_street: "Pärnu mnt", type:"KORRAKAITSE"},
-            //kriminaalpolitsei
+            //kriminaalpolitsei KRIMINAALPOLITSEI
             { id: "960", name: "Ursula Treen - KRIMINAALPOLITSEI", distance: "16.5 km", time: "15 min", avatar: "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png", current_street: "Vabaduse pst", type:"KRIMINAALPOLITSEI"},
             { id: "961", name: "Reimo Rann - KRIMINAALPOLITSEI", distance: "2.5 km", time: "3 min", avatar: "https://i.ibb.co/JHxLHxH/Untitled-design-2-removebg-preview-1.png", current_street: "Liivalaia tn", type:"KRIMINAALPOLITSEI"},
-            //kiirreageerijad
+            //kiirreageerijad KIIRREAGEERIJA
             { id: "570", name: "Toomas Perk - KIIRREAGEERIJA", distance: "19.5 km", time: "18 min", avatar: "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png", current_street: "Sõpruse pst", type:"KIIRREAGEERIJA"},
             { id: "571", name: "Karel Tael - KIIRREAGEERIJA", distance: "3.5 km", time: "4 min", avatar: "https://i.ibb.co/RHZXrMw/Untitled-design-1-1.png", current_street: "Kreutzwaldi tn", type:"KIIRREAGEERIJA"},
 
@@ -425,7 +446,7 @@ button.assigned-btn {
             {name: "Sõpruse pst", distance: 9}, {name: "Mustamäe tee", distance: 10}, {name: "Õismäe tee", distance: 11}, {name: "Tammsaare tee", distance: 12}, {name: "Kreutzwaldi tn", distance: 13}, {name: "Gonsiori tn", distance: 14}, {name: "Tõnismägi", distance: 15}, {name: "Vana-Lõuna tn", distance: 16}, {name: "Kalaranna tn", distance: 11}, {name: "Põhja pst", distance: 11}, {name: "Kopli tn", distance: 12}, {name: "Suur-Ameerika tn", distance: 12}, {name: "Väike-Ameerika tn", distance: 2}, {name: "Koidu tn", distance: 7}, {name: "Liiva tn", distance: 3}, {name: "Pikk tn", distance: 7}, {name: "Suur-Karja tn", distance: 9}, {name: "Vene tn", distance: 11}, {name: "Sakala tn", distance: 15}, {name: "Roosikrantsi tn", distance: 13}, {name: "Tartu mnt", distance: 1}, {name: "Tallinna mnt", distance: 10}
         ];
 
-        let names = ["Kalle Rebane", "Heili Sillyke", "Liisa Tamm", "Priit Saar", "Eeva Leht", "Marko Mets", "Anabell Luu", "Meeli Jõesaar", "Robert Tamm", "Karolin Vahter", "Magnus Sarmet", "Rainer Einblau", "Tundmatu"];
+        let names = ["Kalle Rebane", "Heili Sillyke", "Liisa Tamm", "Priit Saar", "Eeva Leht", "Marko Mets", "Anabell Luu", "Meeli Jõesaar", "Robert Tamm", "Karolin Vahter", "Magnus Sarmet", "Rainer Einblau", "Tundmatu", "Mihkel Kask", "Jaanus Jõgi", "Kerttu Kallas", "Evelin Pärn", "Kristjan Kivi", "Sander Saar", "Laura Leht", "Piret Põld", "Andres Aas", "Katrin Kask", "Rasmus Rannamäe", "Mari Metsala", ];
 
         let people = [
             {
@@ -605,9 +626,13 @@ button.assigned-btn {
 
         function updateRating(amount) {
             rating += amount;
+            ratingDelta += rating;
+
             document.getElementById("rating").innerText = rating;
 
             localStorage.Rating = Number(rating);
+
+            ///updateMoney(amount * 100);
         }
 
         function setRating(amount) {
@@ -615,6 +640,20 @@ button.assigned-btn {
             document.getElementById("rating").innerText = rating;
 
             localStorage.Rating = Number(rating);
+        }
+
+        function updateMoney(amount) {
+            money += amount;
+            document.getElementById("money").innerText = money;
+
+            localStorage.Money = Number(money);
+        }
+
+        function setMoney(amount) {
+            money = amount;
+            document.getElementById("money").innerText = money;
+
+            localStorage.Money = Number(money);
         }
 
         function openTab(evt, tabName) {
@@ -731,6 +770,10 @@ button.assigned-btn {
         }
 
         if (callItem.isRejected === true) {
+            if (acceptedCall === callItem) {
+                    canAcceptCall = true;
+                    acceptedCall = null;
+            }
             clearInterval(interval);
             setTimeout(() => {
                     callItem.remove ()
@@ -749,6 +792,11 @@ button.assigned-btn {
 
                 callItem.querySelector('.accept-btn').remove(); // Remove Reject button
                 callItem.querySelector('.reject-btn').remove(); // Remove Reject button
+
+                if (acceptedCall === callItem) {
+                    canAcceptCall = true; // Allow accepting new calls again
+                    acceptedCall = null; // Reset accepted call
+                }
 
                 updateRating(-7) // Decrease rating for rejection
 
@@ -773,7 +821,14 @@ function toggleDescription(button) {
 
 
 function acceptCall(button) {
+    if (canAcceptCall === false) {
+        alert("Sa ei saa seda kõnet aktsepteerida, kuna sul on juba aktiivne kõne.");
+        return;
+    }
+    canAcceptCall = false; // Prevent further call acceptance until this one is 
     var callItem = button.parentElement;
+    acceptedCall = callItem;
+    
 
     callItem.isAccepted = true;
     
@@ -809,7 +864,7 @@ function assignOfficerToCall(callItem) {
             }
             const officerId = newButton.getAttribute('data-officer-id');
             const assignedOfficer = officers.find(officer => officer.id === officerId);
-
+            console.log(`officer type: ${assignedOfficer}`);
             if (assignedOfficer.type === callItem.bonus_officers_type && callItem.bonus == 0) {
                 callItem.bonus += Math.round(Math.random()) + 1; // Add bonus for matching officer type
             }
@@ -838,6 +893,11 @@ function assignOfficerToCall(callItem) {
             var support_progress = -1;
 
             if (callItem.isAssigned === false) {
+                if (acceptedCall === callItem) {
+                    canAcceptCall = true;
+                    acceptedCall = null;
+                }
+
                 document.getElementById(`progress-${callItem.phone}`).remove(); // Reset progress for the assigned officer
                 document.getElementById(`endTime-${callItem.phone}`).remove(); // Eemalda endTime element
 
@@ -857,8 +917,8 @@ function assignOfficerToCall(callItem) {
             if (callItem.isAssigned === true && callItem.isSupportNeeded === true && callItem.isSupported === false) {
                 callItem.isSupported = true; // Märgi, et toetust on antud
 
-                callItem.style.backgroundColor = '#d4edda'; // Roheline taust toetuse andmise korral
-                callItem.querySelector('.officer-info').innerHTML += `<span class="support-given" id="support-given-${callItem.phone}">Abi saadetud</span>`;
+                callItem.style.backgroundColor = '#ffecb3'; // Roheline taust toetuse andmise korral
+                callItem.querySelector('.officer-info').innerHTML += `<span class="support-given" id="support-given-${callItem.phone}">Toetus antud</span>`;
 
                 document.getElementById(`support-needed-${callItem.phone}`).remove(); // Eemalda toetuse nõudmise tekst
 
@@ -931,7 +991,7 @@ function assignOfficerToCall(callItem) {
                 if (progress >= support_progress && support_progress !== -1 && callItem.isSupported === false && callItem.isSupportNeeded === false) {
                     callItem.isSupportNeeded = true; // Märgi, et toetust vajatakse
                     callItem.TimeoutTime = 10;
-                    callItem.style.backgroundColor = '#fff3cd';
+                    callItem.style.backgroundColor = '#f8d7da';
                     //document.getElementById(`support-chance-${callItem.phone}`).remove();
                     callItem.querySelector('.officer-info').innerHTML += `<span class="support-needed" id="support-needed-${callItem.phone}">Toetust vajab</span>`;
 
@@ -1055,11 +1115,30 @@ function populateOfficerList() {
                 <button class="send-btn send-officer" data-officer-id="${officer.id}">Send</button>
             `;
             officerMenu.appendChild(officerItem);
+
+            console.log("officer ametnik:", officer);
         }
     });
 }
 
+function addOfficerToList(officer) {
+    const officerMenu = document.getElementById("officerMenu");
+   // officerMenu.innerHTML = ''; // Puhasta olemasolev nimekiri
+            const officerItem = document.createElement("div");
+            officerItem.className = "officer-item";
+            officerItem.style.display = "inline-block"; // Kuvame kahes reas
+            officerItem.style.width = "45%"; // Vähendame laiust
 
+            officerItem.innerHTML = `
+                <div class="officer-info">
+                    <img src="${officer.avatar}" class="officer-avatar">
+                    <span>${officer.id} ${officer.name}</span>
+                </div>
+                <button class="send-btn send-officer" data-officer-id="${officer.id}">Send</button>
+            `;
+            officerMenu.appendChild(officerItem);
+
+}
 
 
 // Call this function to populate the list when the page loads
@@ -1243,19 +1322,18 @@ function assignOfficers(callItem, availableOfficers) {
 
         addCall()
 
-        function addRandomCall() {
-    // Loo uus kõne
-    addCall();
-    
-    // Määra randomiseeritud intervall (nt vahemikus 5 kuni 15 sekundit)
-    let randomInterval = Math.floor(Math.random() * (15000)) + 15000;
+    function addRandomCall() {
+        // Loo uus kõne
+        addCall();
+        
+        let randomInterval = Math.floor(Math.random() * (15500)) + 10000;
 
-    // Rekursiivselt kutsu sama funktsioon random intervalliga
-    setTimeout(addRandomCall, randomInterval);
-}
+        // Rekursiivselt kutsu sama funktsioon random intervalliga
+        setTimeout(addRandomCall, randomInterval);
+    }
 
-// Algata esimene kõne
-addRandomCall();
+    // Algata esimene kõne
+    addRandomCall();
 
         //addOfficers()
 
@@ -1335,6 +1413,160 @@ addRandomCall();
         }
 
         setRating(Number(localStorage.Rating));
+
+        if (localStorage.Money === undefined) {
+            localStorage.Money = 10000;
+        }
+        if (localStorage.Money === null) {
+            localStorage.Money = 10000;
+        }
+        if (localStorage.Money === '') {
+            localStorage.Money = 10000;
+        }
+        setMoney(Number(localStorage.Money));
+
+        let hirableOfficers = []
+
+        function createRandomOfficer() {
+            const officerId = Math.floor(Math.random() * 999);
+            const officerName = names[Math.floor(Math.random() * names.length)];
+            const officerAvatar = `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 99)}.jpg`;
+            const monthPay = Math.floor(Math.random() * 1000) + 1000; // Random monthly pay between 1000 and 2000
+            const skillLevel = Math.floor(Math.random() * 100) + 1; // Random skill level between 1 and 100
+
+            return {
+                id: officerId,
+                name: officerName,
+                avatar: officerAvatar,
+                monthPay: monthPay,
+                skillLevel: skillLevel
+            };
+        }
+
+        function addHirableOfficer() {
+            const newOfficer = createRandomOfficer();
+            hirableOfficers.push(newOfficer);
+            populateOfficerHireList();
+        }
+
+        addHirableOfficer()
+        addHirableOfficer()
+        addHirableOfficer()
+        addHirableOfficer()
+        addHirableOfficer()
+        addHirableOfficer()
+        addHirableOfficer()
+        addHirableOfficer()
+
+        function populateOfficerHireList() {
+            const officerMenu = document.getElementById("officerHireList");
+            officerMenu.innerHTML = ''; // Puhasta olemasolev nimekiri
+
+            hirableOfficers.forEach((officer, index) => {
+                    const officerItem = document.createElement("div");
+                    //officerItem.className = "officer-item";
+                    officerItem.style.display = "inline-block"; // Kuvame kahes reas
+                    officerItem.style.width = "45%"; // Vähendame laiust
+
+                    officerItem.innerHTML = `
+                        <div class="officer-info">
+                            <img src="${officer.avatar}" class="officer-avatar">
+                            <span>${officer.id} ${officer.name} <br /> ${officer.monthPay} €/kuu <br /> Oskused: ${officer.skillLevel}</span>
+                        </div>
+                        <button class="" onclick="hireOfficer(this)" data-officer-id="${officer.id}">Palka</button>
+                    `;
+                    officerItem.officerId = officer.id; // Salvestame ID, et hiljem kasutada
+                    officerMenu.appendChild(officerItem);
+            });
+        }
+
+        function hireOfficer(button) {
+            const officerId = button.getAttribute("data-officer-id");
+            const officer = hirableOfficers.find(o => o.id == officerId);
+            if (officer) {
+
+                if (officer.monthPay > Number(localStorage.Money)) {
+                    alert("Sul ei ole piisavalt raha selle ametniku palkamiseks.");
+                    return;
+                }
+                updateMoney(-1 * officer.monthPay);
+                let jobType = window.prompt("Töötüüp nt: PATRULL, KORRAKAITSE, KRIMINAALPOLITSEI, KIIRREAGEERIJA");
+                jobType = jobType.toUpperCase();
+                jobType = jobType.toString();
+                console.log("Töötüüp:", jobType);
+                if (jobType === null || jobType === "") {
+                    alert("Töö tüüp on nõutud, palun proovi uuesti.");
+                    hireOfficer(button)
+                    return;
+                }
+                if (jobType === "PATRULL") {
+                    officer.type = "PATRULL";
+                }
+                else if (jobType === "KORRAKAITSE") {
+                    officer.type = "KORRAKAITSE";
+                }
+                else if (jobType === "KRIMINAALPOLITSEI") {
+                    officer.type = "KRIMINAALPOLITSEI";
+                }
+                else if (jobType === "KIIRREAGEERIJA") {
+                    officer.type = "KIIRREAGEERIJA";
+                }
+                else {
+                    alert("Tundmatu töö tüüp, palun proovi uuesti.");
+                    //hireOfficer(button)
+                    return;
+                }
+
+                //{ id: "085", name: "Kalle Rebane - PATRULL", distance: "1.7 km", time: "2 min", avatar: "https://i.ibb.co/xDQKkFk/police-avatar-person-2845-1.webp", current_street: "Tartu mnt", type:"PATRULL"},
+                //{ id: "002", name: "Liisa Tamm - korrakaitse politseikindral", distance: "3.2 km", time: "5 min", avatar: "https://i.ibb.co/Y0cygDW/png-transparent-police-officer-logo-of-police-officer-police-officer-hat-logo-removebg-preview-1.png", current_street: "Pärnu mnt", type:"KORRAKAITSE"},
+                officer.name = `${officer.name} - ${officer.type}`;
+                officer.isAssigned = false;
+                officer.current_street = "Tartu mnt"; // Näiteks määrame alguses
+                console.log("Ametniku tüüp:", officer.type);
+                officer.distance = "1.7 km"; // Näiteks määrame kauguse
+                officer.time = "2 min"; // Näiteks määrame aja
+                officer.id = String(officer.id).padStart(3, '0'); // Veendume, et ID on kolmekohaline
+                const index = hirableOfficers.indexOf(officer);
+
+                hirableOfficers.splice(index, 1);
+                officers.push(officer);
+                console.log("Palgaline ametnik:", officer);
+
+                populateOfficerHireList();
+                addOfficerToList(officer);
+                //alert(`Ametnik ${officer.name} on palgatud!`);
+            }
+        }
+
+        var day = 1;
+        const interval = setInterval(() => {
+            day++;
+            if (day % 30 === 0) {
+                 // Kui päev on 30, siis alustame uuesti 1-st
+                if (hirableOfficers.length < 10) {
+                    for (let i = 0; hirableOfficers.length < 10; i++) {
+                        console.log("Lisame uue ametniku");
+                        addHirableOfficer();
+                    }
+                }
+
+                if (ratingDelta > 200) {
+                    var top = Math.floor(ratingDelta / 20) * 100;
+                    updateMoney(top);
+                }
+                else {
+                    updateMoney(1000);
+                }
+
+                ratingDelta = 0;
+            }
+
+            if (day > 30) {
+                day = 1; // Kui päevad ületavad 30, alustame uuesti
+            }
+
+            document.getElementById("day").innerText = day;
+        }, 3000);
 
     </script>
 </body>
